@@ -2,7 +2,7 @@
 	import { loadData } from '$lib/api';
 	import { downloadToDoList } from '$lib/utils';
 	import { onMount } from 'svelte';
-  import ToDoList from '../components/ToDoList.svelte';
+	import ToDoList from '../components/ToDoList.svelte';
 
 	let todoList: IToDo[] = [];
 	let inputValue = '';
@@ -43,10 +43,10 @@
 
 <div>
 	<h1>ToDo App</h1>
-	<p>You can easily add new ToDo item by entering title and pressing Add ToDo button.</p>
+	<p>You can easily add a new ToDo item by entering the title and pressing Add ToDo button.</p>
 	<p>
-		By pressing "Download ToDo Items in .txt" button you can download txt file with all updated ToDo
-		items.
+		By pressing the "Download ToDo Items in .txt" button you can download the txt file with all
+		updated ToDo items.
 	</p>
 
 	<form on:submit={handleSubmit}>
@@ -58,18 +58,18 @@
 	<button on:click={handleDownload}>Download ToDo Items in .txt</button>
 
 	<div class="todo-list">
-    <div>
-      <ToDoList {todoList}/>
-    </div>
-    <div class="hide-on-small">
-      <ToDoList {todoList}/>
-    </div>
+		<div>
+			<ToDoList {todoList} />
+		</div>
+		<div class="hide-on-small">
+			<ToDoList {todoList} />
+		</div>
 	</div>
 
 	{#if displayTextToEnter}
 		<div class="text-to-enter">
 			<li>
-        <p>Adding:</p>
+				<p>Adding:</p>
 				<p>&#40;&#126;&#41;</p>
 				{newToDoCount} &#46;&#160; {enteredText}
 			</li>
@@ -85,10 +85,10 @@
 	.todo-list {
 		display: flex;
 		flex-direction: row;
-    gap: 50px;
+		gap: 50px;
 	}
 
-  form {
+	form {
 		border: 1px silver solid;
 		padding: 10px;
 		display: flex;
@@ -105,14 +105,14 @@
 		}
 	}
 
-  :global(li) {
+	:global(li) {
 		display: flex;
 		flex-direction: row;
 		align-items: baseline;
 		gap: 10px;
-  }
+	}
 
-  :global(li p) {
+	:global(li p) {
 		margin: 0;
-  }
+	}
 </style>
