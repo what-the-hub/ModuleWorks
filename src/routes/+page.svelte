@@ -1,16 +1,15 @@
 <div class="wrapper">
   <h1>ModuleWorks Recruitment Test</h1>
+
   <form on:submit={handleSubmit}>
-    <div>
-      <label for="textInput">Add ToDo Item:</label>
-      <input type="text" id="textInput" bind:value={inputValue} />
-    </div>
-    <div>
-      <button type="submit">Add ToDo</button>
-      <button type="button" on:click={handleCancel}>Cancel</button>
-    </div>
+    <label for="textInput">Add ToDo Item:</label>
+    <input type="text" id="textInput" bind:value={inputValue} />
+    <button type="submit">Add ToDo</button>
+    <button type="button" on:click={handleCancel}>Cancel</button>
   </form>
-  
+
+  <button on:click={handleDownload}>Download ToDo Items in .txt</button>
+
   <ul>
     {#each toDos as item}
       <li>
@@ -34,22 +33,20 @@
       </li>
     </div>
   {/if}
-
-
 </div>
 
 
 <script lang="ts">
 	import { loadData } from "$lib/api";
+	import { downloadToDoList } from "$lib/utils";
   import { onMount } from "svelte";
 
-  let toDos: IToDo [] = []
+  let toDos: IToDo [] = [];
   let inputValue = '';
 
   $: enteredText = inputValue;
   $: displayTextToEnter = inputValue.length;
   $: newToDoCount = toDos.length + 1;
-
 
   onMount(async () => {
     toDos = await loadData ();
@@ -58,11 +55,25 @@
 
   function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    console.log('Submitted value:', inputValue);
+    let updatedList = toDos
+    
+    updatedList.push({
+      completed: false,
+      id: newToDoCount,
+      title: inputValue,
+      userId: 111
+    })
+    toDos = updatedList
+    
+    inputValue = '';
   }
 
   function handleCancel() {
     inputValue = '';
+  }
+
+  function handleDownload() {
+    downloadToDoList(toDos);
   }
 
 </script>
@@ -74,10 +85,10 @@
 
 ul {
   list-style-type: none;
-  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
 li {
@@ -85,6 +96,9 @@ li {
   flex-direction: row;
   align-items: baseline;
   gap: 10px;
+}
+li p {
+  margin: 0;
 }
 
 .text-to-enter {
@@ -96,5 +110,16 @@ li {
   background-color: azure;
   z-index: 10;
   color: red;
+}
+
+form {
+  border: 1px silver solid;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+form input {
+  flex: 1
 }
 </style>
