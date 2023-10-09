@@ -12,7 +12,6 @@
 
 	onMount(async () => {
 		toDos = await loadData();
-		console.log(toDos);
 	});
 
 	function handleSubmit(event: SubmitEvent) {
@@ -24,7 +23,7 @@
 				completed: false,
 				id: newToDoCount,
 				title: inputValue,
-				userId: 111
+				userId: 1
 			});
 			toDos = updatedList;
 
@@ -93,8 +92,8 @@
 
 	{#if displayTextToEnter}
 		<div class="text-to-enter">
-			<p>You will add:</p>
 			<li>
+        <p>Adding:</p>
 				<p>&#40;&#126;&#41;</p>
 				{newToDoCount} &#46;&#160; {enteredText}
 			</li>
@@ -127,13 +126,6 @@
 	}
 
 	.text-to-enter {
-		width: 100%;
-		padding: 5px;
-		position: fixed;
-		bottom: 0;
-		border: 1px solid grey;
-		background-color: azure;
-		z-index: 10;
 		color: red;
 	}
 
